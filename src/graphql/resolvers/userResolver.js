@@ -4,11 +4,13 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const userResolver = {
   Query: {
-    users: async () => {
+    user: async (_, { id }) => {
       try {
-        return await User.find();
+        const user = await User.findById(id);
+        if (!user) throw new Error("User not found.");
+        return user;
       } catch (error) {
-        throw new Error("Failed to fetch users.");
+        throw new Error("Failed to fetch user.");
       }
     },
   },
