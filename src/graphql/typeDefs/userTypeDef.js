@@ -21,6 +21,12 @@ const userTypeDef = gql`
     user: User
   }
 
+  type UpdateUserResponse {
+    success: Boolean!
+    message: String!
+    user: User
+  }
+    
   type Query {
     user(id: ID!):User
   }
@@ -28,6 +34,8 @@ const userTypeDef = gql`
   type Mutation {
     register(firstName: String!, lastName: String!, email: String!, password: String!): RegisterResponse
     login(email: String!, password: String!): LoginResponse
+    updateUser(id: ID!, firstName: String, lastName: String, email: String): UpdateUserResponse
+
 
   }
 `;

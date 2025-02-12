@@ -92,6 +92,35 @@ const userResolver = {
         };
       }
     },
+
+    async updateUser(_, { id, firstName, lastName, email }) {
+      try {
+        const user = await User.findById(id);
+        if (!user) {
+          return {
+            success: false,
+            message: "User not found.",
+          };
+        }
+
+        if (firstName) user.firstName = firstName;
+        if (lastName) user.lastName = lastName;
+        if (email) user.email = email;
+
+        await user.save();
+
+        return {
+          success: true,
+          message: "User updated successfully!",
+          user,
+        };
+      } catch (err) {
+        return {
+          success: false,
+          message: "Internal server error. Please try again.",
+        };
+      }
+    },
   },
 };
 
